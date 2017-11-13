@@ -8,9 +8,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 color: red;
             }
         </style>
+        <!-- CSS -->
         <link href="<?php echo base_url('lib/css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?php echo base_url('lib/css/datatables.min.css') ?>" rel="stylesheet">
-
+        
+        <!-- JS -->
         <script src="<?php echo base_url('lib/js/jquery-3.2.1.min.js') ?>"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('lib/js/datatables.min.js') ?>"></script>
@@ -66,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
 
-            <!-- Modal -->
+            <!-- Modal de criação e edição das atividades -->
             <div class="modal fade" id="modalActivity" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -131,6 +133,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </html>
 <script type="text/javascript">
     $(document).ready(function () {
+        /*
+         * Datatable - Declaração e configuração da datatable
+         */
         var activityTable = $('#activityTable').DataTable({// Inicializa a Datatable
             dom: "<'col-xs-12 col-sm-6 col-md-6 col-lg-6 hidden-print'><'col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-right hidden-print'><'pull-right new-activity'>t<'row'<'col-md-5 hidden-print'i><'col-md-7 hidden-print'p>>",
             ajax: "index/loadActivity",
@@ -223,11 +228,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 {"data": "status"},
                 {"data": "situation"},
                 {"data": "id"}
-            ]
+            ],
+            "language": {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ".",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sLoadingRecords": "Carregando...",
+                "sProcessing": "Processando...",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sSearch": "Pesquisar",
+                "oPaginate": {
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLast": "Último"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                }
+            }
         });
-
+        
+        //Colocando elemento button de criação de nova atividade no topo da tabela
         $("div.new-activity").html('<button type="button" class="btn btn-primary" data-toggle="modal" data-func="add" data-target="#modalActivity" data-title="Nova atividade">Nova atividade</button>');
         
+        /*
+         * Validator - Validação da data de término da atividade, quando status for igual a 4(concluído) a data é requerida
+         */
         $.validator.addMethod("e_date", function(value, elem, param) {
             if($('#status').val() == 4){
                 if($('#e_date').val() === '')
@@ -241,6 +273,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         },"Este campo é requerido.");
         
+        /*
+         * Validator - Validação para o campo textarea do nome
+         */
         $.validator.addMethod("t_name", function(value, elem, param) {
             if($('#name').val() === '')
             {
@@ -250,6 +285,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         },"Este campo é requerido.");
         
+        /*
+         * Validator - Validação para o campo textarea da descrição
+         */
         $.validator.addMethod("t_desc", function(value, elem, param) {
             if($('#description').val() === '')
             {
@@ -259,6 +297,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         },"Este campo é requerido.");
         
+        /*
+         * Validator - Tradução de mensagens para o portugûes
+         */
         jQuery.extend(jQuery.validator.messages, {
             required: "Este campo &eacute; requerido.",
             remote: "Por favor, corrija este campo.",
@@ -279,6 +320,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             min: jQuery.validator.format("Por favor, forne&ccedil;a um valor maior ou igual a {0}.")
         });
         
+        /*
+         * Validator - Configuração de validação
+         */
         $('form#activityForm').validate({
             ignore: [],
             lang : 'pt',
@@ -316,6 +360,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
     });
     
+    /*
+     * __addActivity - Função AJAX cuja finalidade é adicionar uma nova atividade ao banco de dados
+     */
     function __addActivity()
     {
         if($('form#activityForm').valid()) {
@@ -332,6 +379,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
     }
     
+    /*
+     * __editActivity - Função AJAX cuja finalidade é editar uma atividade existente
+     */
     function __editActivity()
     {
         if($('form#activityForm').valid()) {
@@ -348,6 +398,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
     }
     
+    /*
+     * Modal - Método bootstrap, ativado quando a modal é aberta.
+     * Carrega as informações básicas quando se está adicionando uma nova atividade
+     * Carrega todos os campos quando se está editando uma atividade
+     */
     $('#modalActivity').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var title = button.data('title');
@@ -381,18 +436,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
     });
     
+    /*
+     * Modal - Método bootstrap acionado quando a modal é fechada
+     * Efetuo a limpeza de todos os campos do formulário no ato do fechamento da modal
+     */
     $('#modalActivity').on('hide.bs.modal', function (event) {
         var modal = $(this);
         modal.find("input,textarea").val('').end();
     });
     
+    /*
+     * Filter - Ao efetuar uma alteração de seleção no filtro, efetuo uma recarga da datatable, contendo somente as atividades cujo status e situação foram escolhidas
+     */
     $('#filterStatus').change(function(){
-        var id = $(this).val();
-        $('#activityTable').DataTable().ajax.url('index/getActivityByStatus/' + id).load();
+        var situation = $(this).val();
+        var status = $('#filterSituation').val();
+        $('#activityTable').DataTable().ajax.url('index/getActivityByFilter/' + status + '/' + situation).load();
     });
     
     $('#filterSituation').change(function(){
-        var id = $(this).val();
-        $('#activityTable').DataTable().ajax.url('index/getActivityBySituation/' + id).load();
+        var situation = $(this).val();
+        var status = $('#filterStatus').val();
+        $('#activityTable').DataTable().ajax.url('index/getActivityByFilter/' + status + '/' + situation).load();
     });
 </script>

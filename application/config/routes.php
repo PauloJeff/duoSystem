@@ -58,5 +58,4 @@ $route['index/addActivity'] = 'index/addActivity';
 $route['index/editActivity'] = 'index/editActivity';
 $route['index/getActivityById'] = 'index/getActivityById';
 $route['index/getActivityById'] = 'index/getActivityById';
-$route['index/getActivityByStatus/(:any)'] = 'index/getActivityByStatus/$1';
-$route['index/getActivityBySituation/(:any)'] = 'index/getActivityBySituation/$1';
+$route['index/getActivityByFilter/(:any)/(:any)'] = 'index/getActivityByFilter/$1/$2';

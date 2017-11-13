@@ -3,7 +3,7 @@
  * Classe de CRUD da tabela status
  *
  * @author  Paulo Jeffrerson <dark_4862@hotmail.com>
- * */
+ */
 Class Status extends CI_Model{
     protected $table = 'status';
 

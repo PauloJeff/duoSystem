@@ -3,7 +3,7 @@
  * Classe de CRUD da tabela activity
  *
  * @author  Paulo Jeffrerson <dark_4862@hotmail.com>
- * */
+ */
 Class Activity extends CI_Model{
     protected $table = 'activity';
 
