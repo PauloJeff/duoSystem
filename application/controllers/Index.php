@@ -49,8 +49,8 @@ class Index extends CI_Controller{
      */
     public function getActivityByFilter()
     {
-        $status = (!is_null($this->uri->segment(3))) ? $this->uri->segment(3) : NULL;
-        $situation = (!is_null($this->uri->segment(4))) ? $this->uri->segment(4) : NULL;
+        $status = ($this->uri->segment(3) != 'null') ? $this->uri->segment(3) : NULL;
+        $situation = ($this->uri->segment(4) != 'null') ? $this->uri->segment(4) : NULL;
         
         if(!is_null($status) && !is_null($situation))
         {

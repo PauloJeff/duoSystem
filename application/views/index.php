@@ -449,14 +449,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      * Filter - Ao efetuar uma alteração de seleção no filtro, efetuo uma recarga da datatable, contendo somente as atividades cujo status e situação foram escolhidas
      */
     $('#filterStatus').change(function(){
-        var situation = $(this).val();
-        var status = $('#filterSituation').val();
+        var status = $(this).val();
+        var situation = $('#filterSituation').val();
+        
+        if(status == '')
+        {
+            status = 'null';
+        }
+        
+        if(situation == '')
+        {
+            situation = 'null';
+        }
         $('#activityTable').DataTable().ajax.url('index/getActivityByFilter/' + status + '/' + situation).load();
     });
     
     $('#filterSituation').change(function(){
         var situation = $(this).val();
         var status = $('#filterStatus').val();
+        if(status == '')
+        {
+            status = 'null';
+        }
+        
+        if(situation == '')
+        {
+            situation = 'null';
+        }
         $('#activityTable').DataTable().ajax.url('index/getActivityByFilter/' + status + '/' + situation).load();
     });
 </script>
