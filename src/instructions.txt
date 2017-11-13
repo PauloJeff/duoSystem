@@ -1,0 +1,2 @@
+########ATENÇÃO########
+O arquivo de conexão do banco de dados se encontra em application/config/database.php
