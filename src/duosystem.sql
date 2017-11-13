@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 13, 2017 at 12:49 AM
+-- Generation Time: Nov 13, 2017 at 03:15 AM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `duosystem`
 --
+CREATE DATABASE IF NOT EXISTS `duosystem` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `duosystem`;
 
 -- --------------------------------------------------------
 
@@ -39,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_status_activity_idx` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
